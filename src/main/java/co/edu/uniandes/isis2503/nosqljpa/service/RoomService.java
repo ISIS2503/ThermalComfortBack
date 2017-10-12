@@ -71,7 +71,7 @@ public class RoomService {
     }
 
     @POST
-    @Secured({Role.admin, Role.service})
+    @Secured({Role.admin})
     @Path("{code}/consolidateddata")
     public ConsolidatedDataDTO addConsolidatedData(@PathParam("code") String code, ConsolidatedDataDTO dto) {
         RoomDTO room = roomLogic.findCode(code);
@@ -83,7 +83,7 @@ public class RoomService {
         roomLogic.update(room);
         return result;
     }
-    
+
     @GET
     @Secured
     @Path("{code}/consolidateddata")
@@ -91,7 +91,7 @@ public class RoomService {
         RoomDTO room = roomLogic.findCode(code);
         return consolidateddataLogic.findByRoomId(room.getId());
     }
-    
+
     @POST
     @Path("{code}/sensors")
     public SensorDTO addSensor(@PathParam("code") String code, SensorDTO dto) {
@@ -128,5 +128,5 @@ public class RoomService {
             Logger.getLogger(RoomService.class.getName()).log(Level.WARNING, e.getMessage());
             return Response.status(500).header("Access-Control-Allow-Origin", "*").entity("We found errors in your query, please contact the Web Admin.").build();
         }
-    }    
+    }
 }

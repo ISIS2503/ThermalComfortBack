@@ -71,7 +71,7 @@ public class SensorService {
     }
 
     @POST
-    @Secured({Role.admin})
+    @Secured({Role.admin, Role.service})
     @Path("{code}/realtimedata")
     public RealTimeDataDTO addRealTimeData(@PathParam("code") String code, RealTimeDataDTO dto) {
         SensorDTO sensor = sensorLogic.findCode(code);
@@ -81,7 +81,7 @@ public class SensorService {
         sensorLogic.update(sensor);
         return result;
     }
-    
+
     @GET
     @Secured
     @Path("{code}/realtimedata")
@@ -89,7 +89,7 @@ public class SensorService {
         SensorDTO sensor = sensorLogic.findCode(code);
         return realtimedataLogic.findBySensorId(sensor.getId());
     }
-    
+
     @POST
     @Path("{code}/measurements")
     public MeasurementDTO addMeasurement(@PathParam("code") String code, MeasurementDTO dto) {
@@ -126,5 +126,5 @@ public class SensorService {
             Logger.getLogger(SensorService.class.getName()).log(Level.WARNING, e.getMessage());
             return Response.status(500).header("Access-Control-Allow-Origin", "*").entity("We found errors in your query, please contact the Web Admin.").build();
         }
-    }    
+    }
 }
